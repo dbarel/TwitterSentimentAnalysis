@@ -1,0 +1,9 @@
+# Please enter person names/ niknames / hashtags/ phrases  you will like to anlayzed PERSON.KEYWORDS. Keep the phrase sperded by |  
+
+# Example: person.keywords = david bowie | bowie david | bowiedavid | davidbowie |Bowie'|(Bowie | Bowie)|Bowie. 
+	       
+PERSON.KEYWORDS = Donald Trump| Trump| #potus| @therealdonalntrump
+
+* Please be advised the search is Not Case sensitive and will return if the char combination existent,
+  For example if one of keyword is TRump the program will analyeze: TRump, trumps, to#trump, trumping, Sir.trumps etc...
+  So it a good idea to add space for searching the exact name.
