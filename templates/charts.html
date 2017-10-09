@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+<script>
+{% block jquery %}
+var endpoint = '/api/chart/data/';
+
+var labels = [];
+var hourData, dayData, mounthData =[];
+
+    (function giveAjax(){
+    $.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function(data){
+        labels = data.labels;
+
+        hourData = data.hour;
+        dayData = data.day;
+        mounthData = data.mounth;
+        setChart();
+    },
+    error: function(error_data){
+        console.log("error");
+        console.log(error_data);
+    }
+    })
+    setTimeout(arguments.callee, 10000);{# ever 10s rerun the GET method #}
+})();
+
+giveAjax();
+
+function setChart(){
+    var ctx = document.getElementById("myChart");
+    var ctx2 = document.getElementById("myChart2");
+    var ctx3 = document.getElementById("myChart3");
+    var myChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Hourly Sentiment',
+            data: hourData,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+         legend: {
+            display: false
+         },
+        animation: {easing: 'easeInQuad'},
+        title: {display: true, text: 'Hourly Sentiment'},
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+        var myChart = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'daily Sentiment',
+            data: dayData,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+
+            ],
+
+            borderWidth: 1
+
+        }]
+    },
+    options: {
+         legend: {display: false},
+        title: {display: true,
+            text: 'Daily Sentiment'},
+        animation: {easing: 'easeInQuad'},
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'monthly sentient',
+            data: mounthData,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: { legend: {display: false},
+        title: {display: true, text: 'Monthly Sentiment'},
+        animation: {easing: 'easeInQuad'},
+        scales: {yAxes: [{ticks: {beginAtZero:true}}]
+        }
+    }
+});
+}
+// var ctx = document.getElementById("myChart");
+
+
+
+{% endblock %}
+</script>
+
+{% block content %}
+
+<div class='row'>
+    <div class='col-sm-12' url-endpoint='{% url "api-data" %}'>
+        <h1>Sentiment Analysis </h1>
+        <div class='col-sm-6'>
+            <canvas id="myChart2" width="400" height="400"></canvas>
+        </div>
+        <div class='col-sm-6'>
+            <canvas id="myChart3" width="400" height="400"></canvas>
+        </div>
+        <div class='col-sm-6'>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock content %}
