@@ -1,5 +1,5 @@
 # TwitterSentimentAnalysis
-============================
+
 
 This tool analyze the sentiment towards a specific person over time.
 The tool will gather tweets from live twitter stream, and present the relative sentiment for the last hour, day and month.
